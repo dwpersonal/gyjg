@@ -1,7 +1,7 @@
 package com.zcreate.offline.gyjg.redistohive.impl;
 
 import com.zcreate.offline.gyjg.redistohive.config.HiveClient;
-import com.zcreate.offline.gyjg.redistohive.entity.MenjinPassCount;
+import com.zcreate.offline.gyjg.entity.MenjinPassCount;
 import com.zcreate.offline.gyjg.redistohive.MenjinHiveDao;
 import org.springframework.stereotype.Service;
 

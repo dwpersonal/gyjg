@@ -1,9 +1,8 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.mysql.impl;
 
 import com.zcreate.offline.gyjg.oracletomysql.service.mysql.ExamineeMysqlDao;
-import com.zcreate.offline.gyjg.redistohive.entity.Examinee;
+import com.zcreate.offline.gyjg.entity.Examinee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.ExtensionAwareQueryMethodEvaluationContextProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

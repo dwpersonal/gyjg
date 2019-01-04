@@ -1,10 +1,8 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.mysql;
 
-import com.zcreate.offline.gyjg.redistohive.entity.ExamResult;
+import com.zcreate.offline.gyjg.entity.ExamResult;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * @ClassName: ExamResultMysqlDao
@@ -17,7 +15,7 @@ import java.util.List;
 @Mapper
 public interface ExamResultMysqlDao {
 
-    @Insert("INSERT INTO m_exam_record(examinee_code," +
+    @Insert("INSERT INTO m_exam_record(" +
             "examinee_name, " +
             "idetity_card, " +
             "school_code, " +
@@ -27,14 +25,17 @@ public interface ExamResultMysqlDao {
             "exam_date, " +
             "exam_score, " +
             "exam_res, " +
-            "update_time) VALUES(#{examineeId}," +
-            "#{examineeName}, " +
+            "update_time) VALUES(" +
+            "#{name}, " +
             "#{idCard}," +
-            "#{schoolId}," +
-            "#{schoolName}," +
-            "#{examDate}," +
-            "#{score}," +
-            "#{examResult}," +
+            "#{schoolId}, " +
+            "#{schoolName}, "+
+            "#{examineeId}, "+
+
+            "#{examineeName}, "+
+            "#{examDate}, " +
+            "#{score}, " +
+            "#{examResult}, " +
             "#{updateTime})")
     void save(ExamResult result);
 }

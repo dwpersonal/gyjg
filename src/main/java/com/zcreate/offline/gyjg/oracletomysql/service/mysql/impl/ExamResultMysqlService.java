@@ -1,7 +1,8 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.mysql.impl;
 
 import com.zcreate.offline.gyjg.oracletomysql.service.mysql.ExamResultMysqlDao;
-import com.zcreate.offline.gyjg.redistohive.entity.ExamResult;
+import com.zcreate.offline.gyjg.entity.ExamResult;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +18,9 @@ import java.util.List;
 @Service
 public class ExamResultMysqlService {
 
+    @Autowired
     private ExamResultMysqlDao examResultMysqlDao;
+
     public void save(List<ExamResult> examResults) {
         for(ExamResult examResult : examResults){
             examResultMysqlDao.save(examResult);

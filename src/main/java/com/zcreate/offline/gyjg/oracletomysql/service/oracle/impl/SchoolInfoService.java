@@ -3,7 +3,7 @@ package com.zcreate.offline.gyjg.oracletomysql.service.oracle.impl;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.DataResource;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.SchoolInfoDao;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.util.ConnectUtil;
-import com.zcreate.offline.gyjg.redistohive.entity.SchoolInfo;
+import com.zcreate.offline.gyjg.entity.SchoolInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +31,7 @@ public class SchoolInfoService implements SchoolInfoDao {
 
         Connection connection = connectUtil.getConnect();
 
-        String sql = "select JXDM, JXMC, LXR, JXDZ from VM_JG_EXAM_SCHOOLINFO";
+        String sql = "select JXDM, JXMC, LXR, JXDZ from gyjg.VM_JG_EXAM_SCHOOLINFO";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();

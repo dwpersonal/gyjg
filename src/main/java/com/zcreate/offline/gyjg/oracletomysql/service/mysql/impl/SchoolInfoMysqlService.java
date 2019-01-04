@@ -1,7 +1,7 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.mysql.impl;
 
 import com.zcreate.offline.gyjg.oracletomysql.service.mysql.SchoolInfoMysqlDao;
-import com.zcreate.offline.gyjg.redistohive.entity.SchoolInfo;
+import com.zcreate.offline.gyjg.entity.SchoolInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

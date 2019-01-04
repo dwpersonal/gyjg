@@ -1,4 +1,4 @@
-package com.zcreate.offline.gyjg.redistohive.entity;
+package com.zcreate.offline.gyjg.entity;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -102,5 +102,21 @@ public class ExamResult {
 
     public void setExamResult(String examResult) {
         this.examResult = examResult;
+    }
+
+    @Override
+    public String toString() {
+        return "ExamResult{" +
+                "idCard='" + idCard + '\'' +
+                ", name='" + name + '\'' +
+                ", schoolId='" + schoolId + '\'' +
+                ", schoolName='" + schoolName + '\'' +
+                ", examineeId='" + examineeId + '\'' +
+                ", examineeName='" + examineeName + '\'' +
+                ", examDate=" + examDate +
+                ", score=" + score +
+                ", examResult='" + examResult + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 }

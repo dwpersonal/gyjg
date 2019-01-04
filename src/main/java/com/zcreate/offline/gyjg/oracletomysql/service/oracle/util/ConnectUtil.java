@@ -48,7 +48,6 @@ public class ConnectUtil {
 //        pro.put("password", "ZCKJ2018");
 //        connection = driver.connect("jdbc:oracle:thin:@172.16.17.82:1521:gyjg", pro);
 
-        System.out.println(user + ":" + password);
         pro.put("user", user);
         pro.put("password", password);
         connection = driver.connect(url, pro);

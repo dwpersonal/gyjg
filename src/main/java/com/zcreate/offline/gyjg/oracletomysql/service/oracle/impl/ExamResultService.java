@@ -3,7 +3,7 @@ package com.zcreate.offline.gyjg.oracletomysql.service.oracle.impl;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.DataResource;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.ExamResultDao;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.util.ConnectUtil;
-import com.zcreate.offline.gyjg.redistohive.entity.ExamResult;
+import com.zcreate.offline.gyjg.entity.ExamResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ public class ExamResultService implements ExamResultDao {
         Connection connection = connectUtil.getConnect();
 
         String sql = "SELECT JSZH,XM,JXDM,KCDM,JSSJ,JGFS, HGBJ " +
-                "FROM VM_JG_EXAM_KS_RESULT " +
+                "FROM gyjg.VM_JG_EXAM_KS_RESULT " +
                 "where to_date(JSSJ) = to_date(sysdate - 1)";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);

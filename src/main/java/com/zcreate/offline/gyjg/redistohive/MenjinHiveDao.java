@@ -1,7 +1,7 @@
 package com.zcreate.offline.gyjg.redistohive;
 
 
-import com.zcreate.offline.gyjg.redistohive.entity.MenjinPassCount;
+import com.zcreate.offline.gyjg.entity.MenjinPassCount;
 
 public interface MenjinHiveDao {
 

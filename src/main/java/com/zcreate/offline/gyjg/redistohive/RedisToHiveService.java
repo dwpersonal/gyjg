@@ -3,7 +3,7 @@ package com.zcreate.offline.gyjg.redistohive;
 
 import com.zcreate.offline.gyjg.redistohive.impl.MenjinCountService;
 import com.zcreate.offline.gyjg.redistohive.impl.MenjinRedisService;
-import com.zcreate.offline.gyjg.redistohive.entity.MenjinPassCount;
+import com.zcreate.offline.gyjg.entity.MenjinPassCount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

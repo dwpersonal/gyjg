@@ -1,11 +1,9 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.mysql;
 
-import com.zcreate.offline.gyjg.redistohive.entity.Examinee;
+import com.zcreate.offline.gyjg.entity.Examinee;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * @ClassName: ExamineeMysqlDao

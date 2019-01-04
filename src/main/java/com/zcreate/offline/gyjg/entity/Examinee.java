@@ -1,4 +1,4 @@
-package com.zcreate.offline.gyjg.redistohive.entity;
+package com.zcreate.offline.gyjg.entity;
 
 import java.sql.Timestamp;
 

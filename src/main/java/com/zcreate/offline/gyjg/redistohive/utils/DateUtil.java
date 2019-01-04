@@ -31,6 +31,11 @@ public class DateUtil {
         return sdf.parse(date);
     }
 
+    public static String parse(Date date, String pattern){
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
+    }
+
     /**
      * 给定日期与当前日期差值
      * @param date

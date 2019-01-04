@@ -1,6 +1,6 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.oracle.impl;
 
-import com.zcreate.offline.gyjg.redistohive.entity.Examinee;
+import com.zcreate.offline.gyjg.entity.Examinee;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.DataResource;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.ExamineeDao;
 import com.zcreate.offline.gyjg.oracletomysql.service.oracle.util.ConnectUtil;
@@ -31,7 +31,7 @@ public class ExamIneeService implements ExamineeDao {
 
         Connection connection = connectUtil.getConnect();
 
-        String sql = "select KCDM, KCMC from VM_JG_EXAM_EXAM_KCDM";
+        String sql = "select KCDM, KCMC from gyjg.VM_JG_EXAM_EXAM_KCDM";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();

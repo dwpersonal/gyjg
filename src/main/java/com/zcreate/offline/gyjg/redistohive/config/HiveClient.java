@@ -1,6 +1,8 @@
 package com.zcreate.offline.gyjg.redistohive.config;
 
 
+import org.json.JSONObject;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ public class HiveClient {
     private static String driverName = "org.apache.hive.jdbc.HiveDriver";
     // 默认就是10000端口，ip地址使用hive服务器的、
 //    线上
-    private static String url = "jdbc:hive2://10.197.236.15:10000/gyjg";
+    private static String url = "jdbc:hive2://172.16.25.4:10000/gyjg";
     //测试
 //    private static String url = "jdbc:hive2://10.1.80.5:10000/gyjg";
     // hive连接的用户名和密码，默认就算是下面这两个
