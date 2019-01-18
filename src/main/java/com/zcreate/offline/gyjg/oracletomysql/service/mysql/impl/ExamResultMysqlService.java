@@ -16,14 +16,20 @@ import java.util.List;
  */
 
 @Service
-public class ExamResultMysqlService {
+public class ExamResultMysqlService implements ExamResultMysqlDao {
 
     @Autowired
     private ExamResultMysqlDao examResultMysqlDao;
 
     public void save(List<ExamResult> examResults) {
         for(ExamResult examResult : examResults){
-            examResultMysqlDao.save(examResult);
+            save(examResult);
         }
+    }
+
+
+    @Override
+    public void save(ExamResult result) {
+        examResultMysqlDao.save(result);
     }
 }

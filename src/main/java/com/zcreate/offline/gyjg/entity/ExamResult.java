@@ -22,6 +22,7 @@ public class ExamResult {
     private Date examDate;
     private double score;
     private String examResult;
+    private String supervisorName;
     private Timestamp updateTime;
 
     public String getIdCard() {
@@ -102,6 +103,14 @@ public class ExamResult {
 
     public void setExamResult(String examResult) {
         this.examResult = examResult;
+    }
+
+    public String getSupervisorName() {
+        return supervisorName;
+    }
+
+    public void setSupervisorName(String supervisorName) {
+        this.supervisorName = supervisorName;
     }
 
     @Override

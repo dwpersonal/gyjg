@@ -45,6 +45,7 @@ public class ShellCommand {
             }
             logger.info(str);
         }
+
         if(status == 0){
             logger.info("succeed " + name);
         }else {

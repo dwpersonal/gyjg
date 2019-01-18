@@ -16,18 +16,44 @@ import java.util.List;
  */
 
 @Service
-public class SchoolInfoMysqlService {
+public class SchoolInfoMysqlService implements SchoolInfoMysqlDao {
 
     @Autowired
     private SchoolInfoMysqlDao schoolInfoMysqlDao;
 
     public void save(List<SchoolInfo> schoolInfos) {
         for(SchoolInfo schoolInfo : schoolInfos){
-            schoolInfoMysqlDao.save(schoolInfo);
+            save(schoolInfo);
         }
     }
 
-    public void clean(){
-        schoolInfoMysqlDao.truncate();
+    public void update(List<SchoolInfo> schoolInfos){
+        for(SchoolInfo schoolInfo : schoolInfos){
+            if(getSchoolInfo(schoolInfo.getSchoolId()) != null){
+                update(schoolInfo);
+            }else {
+                save(schoolInfo);
+            }
+        }
+    }
+
+    @Override
+    public int save(SchoolInfo schoolInfo) {
+        return schoolInfoMysqlDao.save(schoolInfo);
+    }
+
+    @Override
+    public int update(SchoolInfo schoolInfo) {
+        return schoolInfoMysqlDao.update(schoolInfo);
+    }
+
+    @Override
+    public SchoolInfo getSchoolInfo(String schoolId) {
+        return schoolInfoMysqlDao.getSchoolInfo(schoolId);
+    }
+
+    @Override
+    public int truncate() {
+        return schoolInfoMysqlDao.truncate();
     }
 }

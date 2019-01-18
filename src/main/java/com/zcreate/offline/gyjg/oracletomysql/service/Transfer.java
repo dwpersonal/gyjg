@@ -44,8 +44,7 @@ public class Transfer {
         try {
             examineeMysqlService.clear();
             examineeMysqlService.save(examIneeService.listAllExamInee());
-            schoolInfoMysqlService.clean();
-            schoolInfoMysqlService.save(schoolInfoService.listAllSchoolInfo());
+            schoolInfoMysqlService.update(schoolInfoService.listAllSchoolInfo());
             examResultMysqlService.save(examResultService.listExamResultYesterday());
         } catch (Exception e) {
             logger.error(e.getMessage(), e);

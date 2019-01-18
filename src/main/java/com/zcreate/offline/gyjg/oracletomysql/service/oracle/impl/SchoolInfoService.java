@@ -31,7 +31,7 @@ public class SchoolInfoService implements SchoolInfoDao {
 
         Connection connection = connectUtil.getConnect();
 
-        String sql = "select JXDM, JXMC, LXR, JXDZ from gyjg.VM_JG_EXAM_SCHOOLINFO";
+        String sql = "select JXDM, JXMC, LXDH, LXR, JXDZ, kpxcx from gyjg.VM_JG_EXAM_SCHOOLINFO";
 
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -42,8 +42,10 @@ public class SchoolInfoService implements SchoolInfoDao {
             SchoolInfo schoolInfo = new SchoolInfo();
             schoolInfo.setSchoolId(resultSet.getString("JXDM"));
             schoolInfo.setSchoolName(resultSet.getString("JXMC"));
-            schoolInfo.setContactWay(resultSet.getString("LXR"));
+            schoolInfo.setTelephone(resultSet.getString("LXDH"));
             schoolInfo.setAddress(resultSet.getString("JXDZ"));
+            schoolInfo.setLawPerson(resultSet.getString("LXR"));
+            schoolInfo.setBusiness(resultSet.getString("kpxcx"));
             Date date = new Date();
             schoolInfo.setUpdate(new Timestamp(date.getTime()));
 

@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.io.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -50,12 +51,12 @@ public class RepairService {
     @Value("${hive.load.exam.ks.result}")
     private String loadExamKsResult;
 
-    @Value("${hive.import.schoolinfo}")
+    @Value("${repair.hive.import.schoolinfo}")
     private String importSchoolinfo;
     @Value("${hive.load.schoolinfo}")
     private String loadSchoolinfo;
 
-    @Value("${hive.import.perasign}")
+    @Value("${repair.hive.import.perasign}")
     private String importPerasign;
     @Value("${hive.load.perasign}")
     private String loadPerasign;
@@ -80,8 +81,23 @@ public class RepairService {
     private String selectSchoolMidCount;
     @Value("${repair.hive.select.m_driving_school_total}")
     private String selectMDrivingSchoolTotal;
-    @Value("${repair.hive.select.m_driving_school_statistics}")
-    private String selectMDrivingSchoolStatistics;
+//    @Value("${repair.hive.select.m_driving_school_statistics}")
+//    private String selectMDrivingSchoolStatistics;
+    @Value("${repair.hive.select.graduate_mid_num}")
+    private String selectGraduateMidNum;
+    @Value("${repair.hive.select.m_apply_statistics}")
+    private String selectMApplyStatictics;
+    @Value("${repair.hive.select.m_driving_school_earliest}")
+    private String selectMDrivingSchoolEarliest;
+    @Value("${repair.hive.select.m_driving_school_total_day}")
+    private String selectMDrivingSchoolTotalDay;
+    @Value("${repair.hive.select.m_driving_school_total_month}")
+    private String selectMDrivingSchoolTotalMonth;
+    @Value("${repair.hive.select.m_driving_school_total_year}")
+    private String selectMDrivingSchoolTotalYear;
+    @Value("${repair.hive.select.students_num_change}")
+    private String selectStudentsNumChange;
+
 
     @Value("${sqoop.export.t_examroom_exam_statistics}")
     private String exportTExamroomExamStatistics;
@@ -93,8 +109,18 @@ public class RepairService {
     private String exportMMutilExaminee;
     @Value("${sqoop.export.m_driving_school_total}")
     private String exportMDrivingSchoolTotal;
-    @Value("${sqoop.export.m_driving_school_statistics}")
-    private String exportMDrivingSchoolStatistics;
+//    @Value("${sqoop.export.m_driving_school_statistics}")
+//    private String exportMDrivingSchoolStatistics;
+    @Value("${sqoop.export.m_apply_statistics}")
+    private String exportMApplyStatistics;
+    @Value("${sqoop.export.m_driving_school_earliest}")
+    private String exportMDrivingSchoolEarliest;
+    @Value("${sqoop.export.m_driving_school_total_day}")
+    private String exportMDrivingSchoolTotalDay;
+    @Value("${sqoop.export.m_driving_school_month}")
+    private String exportMDrivingSchoolMonth;
+    @Value("${sqoop.export.m_driving_school_year}")
+    private String exportMDrivingSchoolYear;
 
 
     @Autowired
@@ -102,108 +128,266 @@ public class RepairService {
     @Autowired
     private Task task;
 
-    public void doTask(boolean isloadExamKsResult, int historyDaysNum) {
+    public void doTask(boolean isContinue, String taskName, int historyDaysNum) throws IOException {
+        switch (taskName){
+            case "import exam_ks_result":
+                importExamKsResult = replaceHistorydaysNum(importExamKsResult, historyDaysNum);
+                if(!task.doShell(importExamKsResult, "import exam_ks_result")){
+                    return;
+                }
+                if(!task.doShell(loadExamKsResult, "load exam_ks_result")){
+                    return;
+                }
+                if(!isContinue){
+                    break;
+                }
+            case "import perasign":
+                importPerasign = replaceHistorydaysNum(importPerasign, historyDaysNum);
+                if(!task.doShell(importPerasign, "import perasign")){
+                    return;
+                }
+                if(!task.doShell(loadPerasign, "load perasign")){
+                    return;
+                }
+                if(!isContinue){
+                    break;
+                }
+            case "import schoolinfo":
+                importSchoolinfo = replaceHistorydaysNum(importSchoolinfo, historyDaysNum);
+                if(!task.doShell(importSchoolinfo, "import schoolinfo")){
+                    return;
+                }
+                if(!task.doShell(loadSchoolinfo, "load schoolinfo")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_absent_examinee":
+                replaceHistoryDaysNumFile(selectMAbsentExaminee, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_absent_examinee")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select exam_mid_result":
+                replaceHistoryDaysNumFile(selectExamMidResult, historyDaysNum);
+                if(!task.doShell(repairSelect, "select exam_mid_result")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select exam_mid_perasign":
+                replaceHistoryDaysNumFile(selectExamMidPerasign, historyDaysNum);
+                if(!task.doShell(repairSelect, "select exam_mid_perasign")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select t_examroom_exam_statistics":
+                replaceHistoryDaysNumFile(selectTExamroomExamStatistics, historyDaysNum);
+                if(!task.doShell(repairSelect, "select t_examroom_exam_statistics")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_station_statistics":
+                replaceHistoryDaysNumFile(selectMStationStatistics, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_station_statistics")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_mutil_examinee":
+                replaceHistoryDaysNumFile(selectMMutilExaminee, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_mutil_examinee")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select school_mid_count":
+                replaceHistoryDaysNumFile(selectSchoolMidCount, historyDaysNum);
+                if(!task.doShell(repairSelect, "select school_mid_count")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select graduate_mid_num":
+                replaceHistoryDaysNumFile(selectGraduateMidNum, historyDaysNum);
+                if(!task.doShell(repairSelect, "select graduate_mid_num")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select students_num_change":
+                replaceHistoryDaysNumFile(selectStudentsNumChange, historyDaysNum);
+                if(!task.doShell(repairSelect, "select students_num_change")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_driving_school_total":
+                replaceHistoryDaysNumFile(selectMDrivingSchoolTotal, historyDaysNum);
+                if(!task.doShell(repairSelect, taskName)){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_apply_statistics":
+                replaceHistoryDaysNumFile(selectMApplyStatictics, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_apply_statistics")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_driving_school_earliest":
+                replaceHistoryDaysNumFile(selectMDrivingSchoolEarliest, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_driving_school_earliest")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_driving_school_total_day":
+                replaceHistoryDaysNumFile(selectMDrivingSchoolTotalDay, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_driving_school_total_day")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_driving_school_total_month":
+                replaceHistoryDaysNumFile(selectMDrivingSchoolTotalMonth, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_driving_school_total_month")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "select m_driving_school_total_year":
+                replaceHistoryDaysNumFile(selectMDrivingSchoolTotalYear, historyDaysNum);
+                if(!task.doShell(repairSelect, "select m_driving_school_total_year")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
 
-        if (isloadExamKsResult) {
-            importExamKsResult = importExamKsResult.replaceAll("<<history_days_num>>", historyDaysNum+"");
-
-            if (!task.doShell(importExamKsResult, "repair import exam_ks_result")) {
-                return;
-            }
-            if (!task.doShell(loadExamKsResult, "repair load exam_ks_result")) {
-                return;
-            }
+            case "export t_examroot_exam_statistics":
+                exportTExamroomExamStatistics = replaceHistorydaysNum(exportTExamroomExamStatistics, historyDaysNum);
+                if(!task.doShell(exportTExamroomExamStatistics, "export t_examroot_exam_statistics")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_absent_examinee":
+                exportMAbsentExaminee = replaceHistorydaysNum(exportMAbsentExaminee, historyDaysNum);
+                if(!task.doShell(exportMAbsentExaminee, "export m_absent_examinee")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_station_statistics":
+                exportMStationStatistics = replaceHistorydaysNum(exportMStationStatistics, historyDaysNum);
+                if(!task.doShell(exportMStationStatistics, "export m_station_statistics")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_mutil_examinee":
+                exportMMutilExaminee = replaceHistorydaysNum(exportMMutilExaminee, historyDaysNum);
+                if(!task.doShell(exportMMutilExaminee, "export m_mutil_examinee")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_driving_school_total":
+                exportMDrivingSchoolTotal = replaceHistorydaysNum(exportMDrivingSchoolTotal, historyDaysNum);
+                if(!task.doShell(exportMDrivingSchoolTotal, "export m_driving_school_total")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_apply_statistics":
+                exportMApplyStatistics = replaceHistorydaysNum(exportMApplyStatistics, historyDaysNum);
+                if(!task.doShell(exportMApplyStatistics, "export m_apply_statistics")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_driving_school_earliest":
+                exportMDrivingSchoolEarliest = replaceHistorydaysNum(exportMDrivingSchoolEarliest, historyDaysNum);
+                if(!task.doShell(exportMDrivingSchoolEarliest, "export m_driving_school_earliest")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_driving_school_total_day":
+                exportMDrivingSchoolTotalDay = replaceHistorydaysNum(exportMDrivingSchoolTotalDay, historyDaysNum);
+                if(!task.doShell(exportMDrivingSchoolTotalDay, "export m_driving_school_total_day")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_driving_school_total_month":
+                exportMDrivingSchoolMonth = replaceHistorydaysNum(exportMDrivingSchoolMonth, historyDaysNum);
+                if(!task.doShell(exportMDrivingSchoolMonth, "export m_driving_school_total_month")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
+            case "export m_driving_school_total_year":
+                exportMDrivingSchoolYear = replaceHistorydaysNum(exportMDrivingSchoolYear, historyDaysNum);
+                if(!task.doShell(exportMDrivingSchoolYear, "export m_driving_school_total_year")){
+                    return;
+                }
+                if(!isContinue){
+                    return;
+                }
         }
+    }
 
-        if (!task.doShell(importSchoolinfo, "repair import schoolinfo")) {
-            return;
+    public String replaceHistorydaysNum(String command, int historyDaysNum){
+        return command.replaceAll("<<history_days_num>>", historyDaysNum+"");
+    }
+
+    public void replaceHistoryDaysNumFile(String path, int historyDaysNum) throws IOException {
+        logger.info("file path : " + path);
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
+        String result = "";
+        String str = null;
+        while ((str = bufferedReader.readLine()) != null){
+            result += str + "\n";
         }
-        if (!task.doShell(loadSchoolinfo, "repair load schoolinfo")) {
-            return;
+        result = replaceHistorydaysNum(result, historyDaysNum);
+        bufferedReader.close();
+
+        File file = new File("/tmp/select.sql");
+        if(!file.exists()){
+            file.createNewFile();
         }
-
-        if (!task.doShell(importPerasign, "repair import perasign")) {
-            return;
-        }
-        if(!task.doShell(loadPerasign, "repair load perasign")){
-            return;
-        }
-
-        try{
-            SqlChangHistoryDaysNum.change(selectMAbsentExaminee, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select m_absent_examinee")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectExamMidPerasign, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select exam_mid_perasing")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectExamMidResult, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select exam_mid_result")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectTExamroomExamStatistics, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select t_examroot_statistics")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectMStationStatistics, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select m_station_statistics")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectMMutilExaminee, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select m_mutil_examinee")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectSchoolMidCount, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select school_mid_count")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectMDrivingSchoolTotal, historyDaysNum);
-            if (!task.doShell(repairSelect, "repair select m_driving_school_total")) {
-                return;
-            }
-
-            SqlChangHistoryDaysNum.change(selectMDrivingSchoolStatistics, historyDaysNum);
-            if (!task.doShell(selectMDrivingSchoolStatistics, "repairselect m_driving_school_statistics")) {
-                return;
-            }
-        }catch (Exception e) {
-            logger.error(e.getMessage(), e);
-            return;
-        }
-
-
-        if (!task.doShell(exportMAbsentExaminee, "repair export m_absent_examinee")) {
-            return;
-        }
-
-        if (!task.doShell(exportMDrivingSchoolStatistics, "repair export m_driving_shool_statistics")) {
-            return;
-        }
-
-        if (!task.doShell(exportMDrivingSchoolTotal, "repair export m_driving_school_total")) {
-            return;
-        }
-
-        if (!task.doShell(exportMMutilExaminee, "repair export m_mutil_examinee")) {
-            return;
-        }
-
-        if (!task.doShell(exportMStationStatistics, "repair export m_station_statistics")) {
-            return;
-        }
-
-        if (!task.doShell(exportTExamroomExamStatistics, "repair export t_examroot_exam_statistics")) {
-            return;
-        }
-
-        logger.info("OK");
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+        writer.write(result);
+        writer.close();
     }
 }

@@ -14,9 +14,9 @@ import java.sql.Timestamp;
 public class SchoolInfo {
     private String schoolName;
     private String schoolId;
-    private String contactWay;
+    private String telephone;
     private String address;
-    private int numOfStaff;
+    private String lawPerson;
     private String business;
     private String photo;
     private Timestamp update;
@@ -37,12 +37,12 @@ public class SchoolInfo {
         this.schoolId = schoolId;
     }
 
-    public String getContactWay() {
-        return contactWay;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setContactWay(String contactWay) {
-        this.contactWay = contactWay;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     public String getAddress() {
@@ -53,13 +53,6 @@ public class SchoolInfo {
         this.address = address;
     }
 
-    public int getNumOfStaff() {
-        return numOfStaff;
-    }
-
-    public void setNumOfStaff(int numOfStaff) {
-        this.numOfStaff = numOfStaff;
-    }
 
     public String getBusiness() {
         return business;
@@ -85,14 +78,21 @@ public class SchoolInfo {
         this.update = update;
     }
 
+    public String getLawPerson() {
+        return lawPerson;
+    }
+
+    public void setLawPerson(String lawPerson) {
+        this.lawPerson = lawPerson;
+    }
+
     @Override
     public String toString() {
         return "SchoolInfo{" +
                 "schoolName='" + schoolName + '\'' +
                 ", schoolId='" + schoolId + '\'' +
-                ", contactWay='" + contactWay + '\'' +
+                ", telephone='" + telephone + '\'' +
                 ", address='" + address + '\'' +
-                ", numOfStaff=" + numOfStaff +
                 ", business='" + business + '\'' +
                 ", photo='" + photo + '\'' +
                 ", update=" + update +

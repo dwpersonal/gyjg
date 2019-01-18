@@ -3,6 +3,7 @@ package com.zcreate.offline.gyjg.oracletomysql.service.mysql;
 import com.zcreate.offline.gyjg.entity.ExamResult;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * @ClassName: ExamResultMysqlDao
@@ -25,17 +26,18 @@ public interface ExamResultMysqlDao {
             "exam_date, " +
             "exam_score, " +
             "exam_res, " +
+            "supervisor_name," +
             "update_time) VALUES(" +
             "#{name}, " +
             "#{idCard}," +
             "#{schoolId}, " +
             "#{schoolName}, "+
             "#{examineeId}, "+
-
             "#{examineeName}, "+
             "#{examDate}, " +
             "#{score}, " +
             "#{examResult}, " +
+            "#{supervisorName}," +
             "#{updateTime})")
     void save(ExamResult result);
 }

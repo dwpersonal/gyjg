@@ -1,5 +1,7 @@
 package com.zcreate.offline.gyjg.oracletomysql.service.mysql.impl;
 
+import com.zcreate.offline.gyjg.entity.ExamResult;
+import com.zcreate.offline.gyjg.oracletomysql.service.mysql.ExamResultMysqlDao;
 import com.zcreate.offline.gyjg.oracletomysql.service.mysql.ExamineeMysqlDao;
 import com.zcreate.offline.gyjg.entity.Examinee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,18 +18,44 @@ import java.util.List;
  */
 
 @Service
-public class ExamineeMysqlService {
+public class ExamineeMysqlService implements ExamineeMysqlDao {
 
     @Autowired
     private ExamineeMysqlDao examineeMysqlDao;
 
     public void save(List<Examinee> examinees){
         for (Examinee examinee : examinees){
-            examineeMysqlDao.save(examinee);
+            save(examinee);
         }
     }
 
-    public void clear(){
-        examineeMysqlDao.clear();
+    public void update(List<Examinee> examinees){
+        for(Examinee examinee : examinees){
+            if(getExaminee(examinee.getExamineeId()) == null){
+                save(examinee);
+            }else {
+                update(examinee);
+            }
+        }
+    }
+
+    @Override
+    public int save(Examinee examinee) {
+        return examineeMysqlDao.save(examinee);
+    }
+
+    @Override
+    public Examinee getExaminee(String examineeId) {
+        return examineeMysqlDao.getExaminee(examineeId);
+    }
+
+    @Override
+    public int update(Examinee examinee) {
+        return examineeMysqlDao.update(examinee);
+    }
+
+    @Override
+    public int clear() {
+        return examineeMysqlDao.clear();
     }
 }
