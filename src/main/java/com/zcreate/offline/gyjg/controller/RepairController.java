@@ -34,10 +34,20 @@ public class RepairController {
     @Autowired
     private RepairService repairService;
 
-    @RequestMapping(path = "/repair", method = RequestMethod.GET)
-    public void doRepair(boolean isContinue, String taskName, int historyDaysNum, boolean synBaseData){
 
-        if(synBaseData){
+    @RequestMapping(path = "/truncateLastYear", method = RequestMethod.GET)
+    public void getLastYear() {
+        if (transfer.trantLastYear() != 1) {
+            logger.info("oracle to mysql fail");
+            return;
+        }
+        logger.info("succeed oracle to mysql");
+    }
+
+    @RequestMapping(path = "/repair", method = RequestMethod.GET)
+    public void doRepair(boolean isContinue, String taskName, int historyDaysNum, boolean synBaseData) {
+
+        if (synBaseData) {
             logger.info("starting redis to hive");
             if (redisToHiveService.doImport() != 1) {
                 logger.info("redis_to_hive fail");

@@ -52,4 +52,17 @@ public class Transfer {
         }
         return 1;
     }
+
+    public int trantLastYear() {
+        try {
+            examineeMysqlService.clear();
+            examineeMysqlService.save(examIneeService.listAllExamInee());
+            schoolInfoMysqlService.update(schoolInfoService.listAllSchoolInfo());
+            examResultMysqlService.save(examResultService.listExamResultLastYear());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return 0;
+        }
+        return 1;
+    }
 }
