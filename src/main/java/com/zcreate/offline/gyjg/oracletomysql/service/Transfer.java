@@ -42,8 +42,8 @@ public class Transfer {
 
     public int trant() {
         try {
-            examineeMysqlService.clear();
-            examineeMysqlService.save(examIneeService.listAllExamInee());
+//            examineeMysqlService.clear();
+            examineeMysqlService.update(examIneeService.listAllExamInee());
             schoolInfoMysqlService.update(schoolInfoService.listAllSchoolInfo());
             examResultMysqlService.save(examResultService.listExamResultYesterday());
         } catch (Exception e) {

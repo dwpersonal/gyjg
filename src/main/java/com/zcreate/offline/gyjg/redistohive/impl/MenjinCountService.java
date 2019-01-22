@@ -22,7 +22,6 @@ public class MenjinCountService implements MenjinHiveDao {
     public void insertMenjinToHive(MenjinPassCount menjinCount) throws Exception {
 
         String sql = "INSERT INTO manual_audit(audit_date, examroom_code, audit_num) values(?, ?, ?)";
-        System.out.println(sql);
 
         //获取连接
         Connection connection = HiveClient.getConnection();
