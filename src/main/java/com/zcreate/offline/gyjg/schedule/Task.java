@@ -265,9 +265,9 @@ public class Task {
         if (!doShell(exportMStationStatistics, "export m_station_statistics")) {
             return;
         }
-//        if (!doShell(exportTExamroomExamStatistics, "export t_examroot_exam_statistics")) {
-//            return;
-//        }
+        if (!doShell(exportTExamroomExamStatistics, "export t_examroot_exam_statistics")) {
+            return;
+        }
         if(!doShell(exportMApplyStatistics, "export m_apply_statistics")){
             return;
         }
